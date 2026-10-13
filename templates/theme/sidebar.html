@@ -1,13 +1,13 @@
 <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark dh-sidebar">
   <div class="container-fluid">
     <div class="navbar-brand navbar-brand-autodark dh-brand">
-      <a href="." class="d-flex align-items-center gap-2 text-decoration-none">
+      <a href="{% url 'dashboard' %}" class="d-flex align-items-center gap-2 text-decoration-none">
         <span class="dh-brand-mark">
           <i class="fa-solid fa-shield-halved"></i>
         </span>
         <span class="lh-1">
-          <span class="dh-brand-name">Project<span class="text-warning">V3</span></span>
-          <span class="dh-brand-sub">Management System</span>
+          <span class="dh-brand-name">Health<span class="text-warning">Track</span></span>
+          <span class="dh-brand-sub">Personal health journal</span>
         </span>
       </a>
     </div>
@@ -41,23 +41,28 @@
           </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link {% if request.resolver_match.app_name == 'users' %}active{% endif %}" href="{% url 'users:user_list' %}">
-            <span class="nav-link-icon d-md-none d-lg-inline-block">
-              <i class="nav-icon fas fa-users"></i>
-            </span>
-            <span class="nav-link-title">Users</span>
-          </a>
+        <li class="nav-item mb-1"><a class="nav-link {% if request.resolver_match.kwargs.slug == 'profile' %}active{% endif %}" href="{% url 'info:health_list' slug='profile' %}"><span class="nav-link-icon"><i class="fa-solid fa-user"></i></span><span class="nav-link-title">Health Profile</span></a></li>
+        <li class="nav-item mb-1">
+          <a class="nav-link {% if request.resolver_match.kwargs.slug in 'activities exercises sleep water meals measurements' %}active{% endif %}" href="#health-record-menu" data-bs-toggle="collapse" role="button" aria-expanded="{% if request.resolver_match.kwargs.slug in 'activities exercises sleep water meals measurements' %}true{% else %}false{% endif %}" aria-controls="health-record-menu"><span class="nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></span><span class="nav-link-title">Health Records</span><i class="fa-solid fa-chevron-down ms-auto small"></i></a>
+          <div class="collapse {% if request.resolver_match.kwargs.slug in 'activities exercises sleep water meals measurements' %}show{% endif %}" id="health-record-menu">
+            <a class="nav-link ht-subnav-link" href="{% url 'info:health_list' slug='activities' %}">Daily activity</a>
+            <a class="nav-link ht-subnav-link" href="{% url 'info:health_list' slug='exercises' %}">Exercise</a>
+            <a class="nav-link ht-subnav-link" href="{% url 'info:health_list' slug='sleep' %}">Sleep</a>
+            <a class="nav-link ht-subnav-link" href="{% url 'info:health_list' slug='water' %}">Water intake</a>
+            <a class="nav-link ht-subnav-link" href="{% url 'info:health_list' slug='meals' %}">Meals</a>
+            <a class="nav-link ht-subnav-link" href="{% url 'info:health_list' slug='measurements' %}">Measurements</a>
+          </div>
         </li>
+        <li class="nav-item mb-1"><a class="nav-link" href="{% url 'dashboard' %}#human-body-chart"><span class="nav-link-icon"><i class="fa-solid fa-person"></i></span><span class="nav-link-title">Human Body Chart</span></a></li>
+        <li class="nav-item mb-1"><a class="nav-link {% if request.resolver_match.kwargs.slug == 'goals' %}active{% endif %}" href="{% url 'info:health_list' slug='goals' %}"><span class="nav-link-icon"><i class="fa-solid fa-bullseye"></i></span><span class="nav-link-title">Health goals</span></a></li>
+        <li class="nav-item mb-1"><a class="nav-link {% if request.resolver_match.kwargs.slug == 'reminders' %}active{% endif %}" href="{% url 'info:health_list' slug='reminders' %}"><span class="nav-link-icon"><i class="fa-regular fa-bell"></i></span><span class="nav-link-title">Reminders</span></a></li>
+        <li class="nav-item mb-1"><a class="nav-link {% if request.resolver_match.kwargs.slug == 'reports' %}active{% endif %}" href="{% url 'info:health_list' slug='reports' %}"><span class="nav-link-icon"><i class="fa-regular fa-file-lines"></i></span><span class="nav-link-title">Reports</span></a></li>
+        <li class="nav-item mb-1"><button class="nav-link w-100 border-0 bg-transparent text-start" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings"><span class="nav-link-icon"><i class="fa-solid fa-gear"></i></span><span class="nav-link-title">Settings</span></button></li>
 
-        <li class="nav-item">
-          <a class="nav-link {% if request.resolver_match.app_name == 'info' %}active{% endif %}" href="{% url 'info:info_list' %}">
-            <span class="nav-link-icon d-md-none d-lg-inline-block">
-              <i class="nav-icon fas fa-address-card"></i>
-            </span>
-            <span class="nav-link-title">Info</span>
-          </a>
-        </li>
+        {% if user.is_superuser %}
+        <li class="nav-item mt-3"><span class="dh-nav-section">Administration</span></li>
+        <li class="nav-item mb-1"><a class="nav-link {% if request.resolver_match.app_name == 'users' %}active{% endif %}" href="{% url 'users:user_list' %}"><span class="nav-link-icon"><i class="fa-solid fa-users"></i></span><span class="nav-link-title">Users</span></a></li>
+        {% endif %}
 
         {% if user.is_authenticated %}
         <li class="nav-item d-lg-none">
@@ -72,12 +77,12 @@
 
         <li class="nav-item mt-auto dh-nav-sidebar-footer">
           <div class="dh-user-card">
-            <a href="{% url 'users:user_list' %}" class="d-flex align-items-center gap-2 text-decoration-none text-white min-w-0 w-100">
-              <span class="dh-avatar">{{ user.username|first|upper }}</span>
+            <a href="{% url 'dashboard' %}" class="d-flex align-items-center gap-2 text-decoration-none text-white min-w-0 w-100">
+              <span class="dh-avatar" aria-hidden="true">{{ user.username|first|upper }}</span>
               <span class="min-w-0 flex-grow-1">
                 <span class="dh-user-name">{{ user.username }}</span>
                 <span class="dh-user-role">
-                  {% if user.is_superuser %}Administrator{% elif user.is_authenticated %}Instructor{% endif %}
+                  {% if user.is_superuser %}Administrator{% elif user.is_authenticated %}Member{% endif %}
                 </span>
               </span>
             </a>

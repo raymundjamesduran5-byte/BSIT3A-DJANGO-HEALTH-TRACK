@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -10,11 +11,14 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
+from apps.users.models import HealthTrackUser
+from apps.users.services import mirror_healthtrack_account
+
 User = get_user_model()
 
 MAX_FAILED_ATTEMPTS = 5
 LOCK_DURATION = timedelta(minutes=1)
-INVALID_LOGIN_MESSAGE = 'Invalid username or password.'
+INVALID_LOGIN_MESSAGE = 'Invalid email or password.'
 LOCKED_MESSAGE = 'Too many failed attempts. Locked for 1 minute.'
 
 
@@ -51,6 +55,40 @@ def _set_lock_state(request):
     return int(LOCK_DURATION.total_seconds())
 
 
+def _authenticate_email(request, email, password):
+    auth_user = User.objects.filter(email__iexact=email).first()
+    health_user = HealthTrackUser.objects.filter(email__iexact=email).first()
+
+    if auth_user:
+        user = authenticate(request, username=auth_user.get_username(), password=password)
+        if user:
+            mirror_healthtrack_account(user)
+            return user
+
+    if not health_user or not check_password(password, health_user.password):
+        return None
+
+    if auth_user:
+        auth_user.set_password(password)
+        auth_user.save(update_fields=['password'])
+        user = authenticate(request, username=auth_user.get_username(), password=password)
+    else:
+        username = health_user.email
+        if User.objects.filter(username=username).exists():
+            username = f'healthtrack_{health_user.user_id}'
+        user = User.objects.create_user(
+            username=username,
+            email=health_user.email,
+            first_name=health_user.first_name,
+            last_name=health_user.last_name,
+            password=password,
+        )
+
+    if user:
+        mirror_healthtrack_account(user)
+    return user
+
+
 def _validate_registration_data(data):
     errors = {}
 
@@ -80,7 +118,7 @@ def _validate_registration_data(data):
         except ValidationError:
             errors['email'] = 'Enter a valid email address.'
         else:
-            if User.objects.filter(email=email).exists():
+            if User.objects.filter(email__iexact=email).exists() or HealthTrackUser.objects.filter(email__iexact=email).exists():
                 errors['email'] = 'Email already registered.'
 
     if not password:
@@ -112,13 +150,14 @@ def login_view(request):
     if request.method == 'GET':
         return render(request, 'auth/login.html')
 
-    username = request.POST.get('username', '').strip()
+    email = request.POST.get('email', '').strip()
     password = request.POST.get('password', '')
-    user = authenticate(request, username=username, password=password)
+    user = _authenticate_email(request, email, password)
 
     if user is not None:
         _reset_lock_state(request)
         login(request, user)
+        request.session.set_expiry(60 * 60 * 24 * 14 if request.POST.get('remember_me') else 0)
         return redirect('dashboard')
 
     failed_attempts += 1
@@ -130,7 +169,7 @@ def login_view(request):
 
     remaining_attempts = MAX_FAILED_ATTEMPTS - failed_attempts
     messages.error(request, f'{INVALID_LOGIN_MESSAGE} {remaining_attempts} attempts remaining.')
-    return render(request, 'auth/login.html')
+    return render(request, 'auth/login.html', {'form_email': email})
 
 
 def logout_view(request):
@@ -140,7 +179,9 @@ def logout_view(request):
 
 @login_required(login_url='login')
 def home(request):
-    return render(request, 'home.html')
+    from apps.info.views import health_dashboard
+
+    return health_dashboard(request)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -171,5 +212,6 @@ def register_view(request):
         email=form_data['email'].strip(),
         password=form_data['password'],
     )
+    mirror_healthtrack_account(user)
     login(request, user)
     return redirect('dashboard')

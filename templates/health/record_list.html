@@ -1,0 +1,20 @@
+{% extends "theme/base.html" %}
+{% block content %}
+<header class="ht-page-heading">
+  <div><p class="ht-eyebrow">PERSONAL HEALTH TRACKER / RECORDS</p><h1>{{ resource.title }}</h1><p class="text-secondary mb-0">Your health records, visible only to you.</p></div>
+  <a class="btn btn-primary" href="{% url 'info:health_create' slug=slug %}"><i class="fa-solid fa-plus me-2"></i>{% if slug == 'profile' and records.object_list %}Edit profile{% else %}Add record{% endif %}</a>
+</header>
+{% if messages %}{% for message in messages %}<div class="alert alert-success" role="status">{{ message }}</div>{% endfor %}{% endif %}
+<section class="ht-section ht-record-section">
+  <div class="ht-record-toolbar">
+    <div><h2>All records</h2><p>{{ records.paginator.count }} record{{ records.paginator.count|pluralize }}</p></div>
+    {% if resource.search %}<form method="get" class="ht-search-form"><label class="visually-hidden" for="record-search">Search records</label><div class="input-group"><span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span><input id="record-search" class="form-control" type="search" name="q" value="{{ query }}" placeholder="Search {{ resource.title|lower }}">{% if query %}<a class="btn btn-outline-secondary" href="{% url 'info:health_list' slug=slug %}" aria-label="Clear search">Clear</a>{% endif %}<button class="btn btn-outline-secondary" type="submit">Search</button></div></form>{% endif %}
+  </div>
+  <div class="table-responsive"><table class="table table-vcenter table-hover ht-record-table">
+    <thead><tr>{% for column in column_headers %}<th>{{ column.label }}</th>{% endfor %}<th class="text-end">Actions</th></tr></thead>
+    <tbody>{% for row in rows %}<tr>{% for column in row.columns %}<td>{{ column.value|default:"—" }}</td>{% endfor %}<td class="text-end"><div class="d-inline-flex gap-1">{% if row.status %}<form method="post" class="d-inline-flex gap-1" action="{% url 'info:health_status' slug=slug pk=row.record.pk %}">{% csrf_token %}<button class="btn btn-sm btn-icon ht-status-btn ht-status-complete{% if row.status == 'Completed' %} is-active{% endif %}" type="submit" name="status" value="Completed" title="Mark as completed" aria-label="Mark as completed"><i class="fa-solid fa-check"></i></button><button class="btn btn-sm btn-icon ht-status-btn ht-status-cancel{% if row.status == 'Cancelled' %} is-active{% endif %}" type="submit" name="status" value="Cancelled" title="Mark as cancelled" aria-label="Mark as cancelled"><i class="fa-solid fa-xmark"></i></button></form>{% endif %}<a class="btn btn-sm btn-ghost-secondary btn-icon" href="{% url 'info:health_edit' slug=slug pk=row.record.pk %}" title="Edit record" aria-label="Edit record"><i class="fa-solid fa-pen"></i></a><form method="post" action="{% url 'info:health_delete' slug=slug pk=row.record.pk %}" onsubmit="return confirm('Delete this record?')">{% csrf_token %}<button class="btn btn-sm btn-ghost-secondary btn-icon text-danger" type="submit" title="Delete record" aria-label="Delete record"><i class="fa-solid fa-trash"></i></button></form></div></td></tr>
+    {% empty %}<tr><td colspan="{{ column_headers|length|add:1 }}"><div class="ht-empty-state ht-list-empty"><i class="fa-regular fa-clipboard"></i><strong>No records yet</strong><span>Start building your personal health history.</span><a class="btn btn-primary btn-sm" href="{% url 'info:health_create' slug=slug %}">Add your first record</a></div></td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% if records.has_other_pages %}<footer class="ht-pagination"><span>Page {{ records.number }} of {{ records.paginator.num_pages }}</span><div class="d-flex gap-2">{% if records.has_previous %}<a class="btn btn-sm btn-outline-secondary" href="?page={{ records.previous_page_number }}{% if query %}&q={{ query|urlencode }}{% endif %}">Previous</a>{% endif %}{% if records.has_next %}<a class="btn btn-sm btn-outline-secondary" href="?page={{ records.next_page_number }}{% if query %}&q={{ query|urlencode }}{% endif %}">Next</a>{% endif %}</div></footer>{% endif %}
+</section>
+{% endblock %}

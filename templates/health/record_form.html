@@ -1,0 +1,9 @@
+{% extends "theme/base.html" %}
+{% block content %}
+<header class="ht-page-heading"><div><p class="ht-eyebrow">PERSONAL HEALTH TRACKER / {{ resource.title|upper }}</p><h1>{% if is_edit %}Edit record{% else %}Add {{ resource.title|lower }}{% endif %}</h1><p class="text-secondary mb-0">Only your account can access these details.</p></div></header>
+<section class="ht-section ht-form-section"><form method="post" novalidate>{% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+  <div class="ht-form-grid">{% for field in form.visible_fields %}<div class="ht-form-field{% if field.field.widget.attrs.rows %} ht-form-field-wide{% endif %}"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="text-danger ms-1">*</span>{% endif %}</label>{{ field }}{% if field.help_text %}<div class="form-hint">{{ field.help_text }}</div>{% endif %}{% for error in field.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}</div>{% endfor %}</div>
+  <div class="ht-form-actions"><a class="btn btn-outline-secondary" href="{% url 'info:health_list' slug=slug %}">Cancel</a><button class="btn btn-primary" type="submit"><i class="fa-solid fa-check me-2"></i>{% if is_edit %}Save changes{% else %}Save record{% endif %}</button></div>
+</form></section>
+{% endblock %}

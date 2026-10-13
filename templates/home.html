@@ -1,26 +1,412 @@
 {% extends "theme/base.html" %}
+{% block body_class %} ht-page-dashboard{% endblock %}
 {% block content %}
-<div class="container-xl">
-  <div class="page-header d-print-none" aria-label="Page header">
-    <div class="container-xl">
-      <div class="row align-items-center">
-        <div class="col">
-          <div class="page-pretitle">Overview</div>
-          <div class="d-flex align-items-center gap-3 flex-wrap d-none d-md-flex">
-            <h2 class="page-title mb-0">Dashboard</h2>
-          </div>
-          <h2 class="page-title mb-0 d-md-none">Dashboard</h2>
-        </div>
+{% load static %}
+{% load humanize %}
+<div class="ht-dashboard">
+  <header class="ht-welcome-row">
+    <div class="ht-welcome-copy">
+      <span class="ht-welcome-icon"><i class="fa-solid fa-person" aria-hidden="true"></i></span>
+      <div>
+        <p class="ht-eyebrow">{{ today|date:"F j, Y" }} <span class="ht-date-divider">·</span> {{ current_time }}</p>
+        <h1>Good {{ greeting }}, {{ health_user.first_name|default:request.user.first_name|default:request.user.username }}!</h1>
+        <p class="ht-welcome-sub">Here's your health overview for today. Keep going, you're doing great!</p>
       </div>
     </div>
-  </div>
-  <br>
+    <aside class="ht-quote-banner" aria-label="Daily inspiration">
+      <span class="ht-quote-icon"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
+      <p>“Small steps every day <br>lead to big results.”</p>
+      <span class="ht-quote-leaf ht-quote-leaf-one"></span><span class="ht-quote-leaf ht-quote-leaf-two"></span><span class="ht-quote-leaf ht-quote-leaf-three"></span>
+    </aside>
+  </header>
 
-  <div class="card">
-    <div class="card-body text-muted">
-      Dashboard
+  <section class="ht-metric-grid" aria-label="Today's health summary">
+    <a class="ht-metric ht-metric-green" href="{% url 'info:health_list' slug='activities' %}">
+      <div class="ht-metric-top">
+        <span class="ht-metric-icon"><i class="fa-solid fa-person-walking" aria-hidden="true"></i></span>
+        <span class="ht-metric-badge">{{ steps_progress }}%</span>
+      </div>
+      <div class="ht-metric-body">
+        <span class="ht-metric-label">Steps</span>
+        <div class="ht-metric-value">
+          <strong>{{ steps_today|intcomma }}</strong>
+          <span class="ht-metric-target">/ 8,000</span>
+        </div>
+        <div class="ht-metric-track" aria-hidden="true">
+          <span style="width:{{ steps_progress }}%"></span>
+        </div>
+      </div>
+    </a>
+    <a class="ht-metric ht-metric-blue" href="{% url 'info:health_list' slug='water' %}">
+      <div class="ht-metric-top">
+        <span class="ht-metric-icon"><i class="fa-solid fa-droplet" aria-hidden="true"></i></span>
+        <span class="ht-metric-badge">{{ water_progress }}%</span>
+      </div>
+      <div class="ht-metric-body">
+        <span class="ht-metric-label">Water intake</span>
+        <div class="ht-metric-value">
+          <strong>{{ water_today|intcomma }}</strong>
+          <span class="ht-metric-target">/ 2,000 ml</span>
+        </div>
+        <div class="ht-metric-track" aria-hidden="true">
+          <span style="width:{{ water_progress }}%"></span>
+        </div>
+      </div>
+    </a>
+    <a class="ht-metric ht-metric-orange" href="{% url 'info:health_list' slug='exercises' %}">
+      <div class="ht-metric-top">
+        <span class="ht-metric-icon"><i class="fa-solid fa-fire" aria-hidden="true"></i></span>
+        <span class="ht-metric-badge">{{ calories_progress }}%</span>
+      </div>
+      <div class="ht-metric-body">
+        <span class="ht-metric-label">Calories burned</span>
+        <div class="ht-metric-value">
+          <strong>{{ calories_today|floatformat:0|intcomma }}</strong>
+          <span class="ht-metric-target">/ 500 kcal</span>
+        </div>
+        <div class="ht-metric-track" aria-hidden="true">
+          <span style="width:{{ calories_progress }}%"></span>
+        </div>
+      </div>
+    </a>
+    <a class="ht-metric ht-metric-purple" href="{% url 'info:health_list' slug='sleep' %}">
+      <div class="ht-metric-top">
+        <span class="ht-metric-icon"><i class="fa-solid fa-moon" aria-hidden="true"></i></span>
+        <span class="ht-metric-badge">{{ sleep_progress }}%</span>
+      </div>
+      <div class="ht-metric-body">
+        <span class="ht-metric-label">Sleep</span>
+        <div class="ht-metric-value">
+          <strong>{{ sleep_hours|floatformat:1 }}</strong>
+          <span class="ht-metric-target">/ 8 hrs</span>
+        </div>
+        <div class="ht-metric-track" aria-hidden="true">
+          <span style="width:{{ sleep_progress }}%"></span>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <div class="ht-overview-grid">
+    <section class="ht-panel ht-profile-panel" aria-labelledby="profile-title">
+      <header class="ht-panel-heading">
+        <h2 id="profile-title"><i class="fa-solid fa-user" aria-hidden="true"></i>Health profile</h2>
+        <a href="{% url 'info:health_list' slug='profile' %}">View profile</a>
+      </header>
+      <div class="ht-profile-identity">
+        <span class="ht-profile-avatar" aria-hidden="true">{{ health_user.first_name|first|upper|default:health_user.email|first|upper }}</span>
+        <div class="ht-profile-name-block">
+          <strong>{{ health_user.first_name }} {{ health_user.last_name }}</strong>
+          <small>{{ health_user.email }}</small>
+        </div>
+      </div>
+      <dl class="ht-profile-details">
+        <div>
+          <dt><i class="fa-regular fa-calendar" aria-hidden="true"></i>Date of birth</dt>
+          <dd>{% if health_user.date_of_birth %}{{ health_user.date_of_birth|date:"M j, Y" }}{% if health_age %} ({{ health_age }} yrs){% endif %}{% else %}Not set{% endif %}</dd>
+        </div>
+        <div>
+          <dt><i class="fa-solid fa-venus-mars" aria-hidden="true"></i>Gender</dt>
+          <dd>{{ health_user.gender|default:"Not set" }}</dd>
+        </div>
+        <div>
+          <dt><i class="fa-solid fa-phone" aria-hidden="true"></i>Contact number</dt>
+          <dd>{{ health_user.contact_number|default:"Not set" }}</dd>
+        </div>
+      </dl>
+      <div class="ht-profile-divider"></div>
+      <dl class="ht-profile-details ht-profile-medical">
+        <div>
+          <dt><i class="fa-solid fa-ruler-vertical" aria-hidden="true"></i>Height</dt>
+          <dd>{% if health_profile.height_cm %}{{ health_profile.height_cm }} cm{% else %}Not set{% endif %}</dd>
+        </div>
+        <div>
+          <dt><i class="fa-solid fa-weight-scale" aria-hidden="true"></i>Weight</dt>
+          <dd>{% if health_profile.weight_kg %}{{ health_profile.weight_kg }} kg{% else %}Not set{% endif %}</dd>
+        </div>
+        <div>
+          <dt><i class="fa-solid fa-droplet" aria-hidden="true"></i>Blood type</dt>
+          <dd><span class="ht-pill-chip">{{ health_profile.blood_type|default:"Not set" }}</span></dd>
+        </div>
+        <div>
+          <dt><i class="fa-solid fa-allergies" aria-hidden="true"></i>Allergies</dt>
+          <dd title="{{ health_profile.allergies|default:'None recorded' }}">{{ health_profile.allergies|default:"None recorded"|truncatechars:22 }}</dd>
+        </div>
+        <div>
+          <dt><i class="fa-solid fa-notes-medical" aria-hidden="true"></i>Conditions</dt>
+          <dd title="{{ health_profile.existing_conditions|default:'None recorded' }}">{{ health_profile.existing_conditions|default:"None recorded"|truncatechars:22 }}</dd>
+        </div>
+      </dl>
+      {% if health_profile.emergency_contact_name or health_profile.emergency_contact_number %}
+      <div class="ht-emergency-contact">
+        <i class="fa-solid fa-phone-volume" aria-hidden="true"></i>
+        <span>
+          <strong>Emergency contact</strong>
+          <small>{{ health_profile.emergency_contact_name }}{% if health_profile.emergency_contact_number %}<br>{{ health_profile.emergency_contact_number }}{% endif %}</small>
+        </span>
+      </div>
+      {% endif %}
+    </section>
+
+    <section class="ht-panel ht-human-panel" id="human-body-chart" aria-labelledby="body-map-title">
+      <header class="ht-panel-heading ht-body-panel-heading">
+        <div>
+          <h2 id="body-map-title"><i class="fa-solid fa-person" aria-hidden="true"></i>Human body chart</h2>
+          <p class="ht-panel-subtitle">Select a body region to view or record health information.</p>
+        </div>
+      </header>
+      <div class="ht-anatomy-layout">
+        <div class="ht-anatomy-stage">
+          <div class="ht-anatomy-figure" role="group" aria-label="Interactive front and back human body chart">
+            <img src="{% static 'images/dashboard-human-chart.png' %}" alt="Human body chart showing front view on the left and back view on the right">
+            {% for region in body_regions %}
+            {% if region.key != 'back' %}
+            <button type="button" class="ht-anatomy-marker ht-marker-{{ region.color }}{% if region.key == 'chest' %} is-active{% endif %}" data-region="{{ region.key }}" data-metric="{{ region.metric }}" data-label="{{ region.label }}" style="left:{{ region.front_x }}%;top:{{ region.front_y }}%" aria-label="{{ region.label }} (front view)" aria-pressed="{% if region.key == 'chest' %}true{% else %}false{% endif %}" title="{{ region.label }} · Front">
+              <span></span>
+            </button>
+            {% endif %}
+            <button type="button" class="ht-anatomy-marker ht-marker-{{ region.color }}{% if region.key == 'chest' %} is-active{% endif %}" data-region="{{ region.key }}" data-metric="{{ region.metric }}" data-label="{{ region.label }}" style="left:{{ region.back_x }}%;top:{{ region.back_y }}%" aria-label="{{ region.label }} (back view)" aria-pressed="{% if region.key == 'chest' %}true{% else %}false{% endif %}" title="{{ region.label }} · Back">
+              <span></span>
+            </button>
+            {% endfor %}
+          </div>
+          <div class="ht-anatomy-view-labels" aria-hidden="true">
+            <span>Front view</span>
+            <span>Back view</span>
+          </div>
+          <p class="ht-anatomy-disclaimer"><i class="fa-solid fa-circle-info" aria-hidden="true"></i>This chart is a simplified guide, not a diagnostic tool.</p>
+        </div>
+        <div class="ht-anatomy-readings">
+          <div class="ht-anatomy-reading" aria-live="polite">
+            <span class="ht-anatomy-reading-icon"><i id="ht-vital-icon" class="fa-solid fa-gauge-high"></i></span>
+            <div class="ht-anatomy-reading-text">
+              <small id="ht-region-title">Chest · Blood pressure</small>
+              <strong id="ht-vital-value">{{ body_metrics.1.reading }}{% if body_metrics.1.reading != 'No reading' %} <small>{{ body_metrics.1.unit }}</small>{% endif %}</strong>
+              <em id="ht-vital-date">{{ body_metrics.1.recorded_at }}</em>
+            </div>
+          </div>
+          <div class="ht-reading-options" aria-label="Latest measurements">
+            {% for metric in body_metrics %}
+            <button type="button" class="ht-reading-row{% if metric.key == 'blood_pressure' %} is-active{% endif %}" data-metric-key="{{ metric.key }}" data-label="{{ metric.label }}" data-reading="{{ metric.reading }}" data-unit="{{ metric.unit }}" data-recorded="{{ metric.recorded_at }}" data-icon="{{ metric.icon }}">
+              <span class="ht-part-dot ht-marker-{{ metric.color }}"></span>
+              <span class="ht-reading-label">{{ metric.label }}</span>
+              <strong class="ht-reading-val">{% if metric.reading == 'No reading' %}—{% else %}{{ metric.reading }}{% endif %}{% if metric.reading != 'No reading' %}<small>{{ metric.unit }}</small>{% endif %}</strong>
+            </button>
+            {% endfor %}
+          </div>
+          <div class="ht-body-part-list" aria-label="Body areas">
+            {% for region in body_regions %}
+            <button type="button" class="ht-body-part{% if region.key == 'chest' %} is-active{% endif %}" data-region="{{ region.key }}" data-metric="{{ region.metric }}" data-label="{{ region.label }}" aria-pressed="{% if region.key == 'chest' %}true{% else %}false{% endif %}">
+              <span class="ht-part-dot ht-marker-{{ region.color }}"></span>
+              <span>{{ region.label }}</span>
+            </button>
+            {% endfor %}
+          </div>
+          <a class="ht-chart-record-link" href="{% url 'info:health_create' slug='measurements' %}">
+            <i class="fa-solid fa-plus" aria-hidden="true"></i>Log a measurement
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="ht-right-column">
+      <section class="ht-panel ht-goals-panel" aria-labelledby="goals-title">
+        <header class="ht-panel-heading">
+          <h2 id="goals-title"><i class="fa-solid fa-bullseye" aria-hidden="true"></i>My health goals</h2>
+          <a href="{% url 'info:health_list' slug='goals' %}">View all</a>
+        </header>
+        <div class="ht-goal-list">
+          {% for goal in goals %}
+          <a class="ht-goal-row ht-goal-{{ forloop.counter }}" href="{% url 'info:health_list' slug='goals' %}">
+            <span class="ht-goal-icon">
+              <i class="fa-solid {% if 'step' in goal.goal_name|lower or 'walk' in goal.goal_name|lower %}fa-shoe-prints{% elif 'water' in goal.goal_name|lower %}fa-droplet{% elif 'sleep' in goal.goal_name|lower %}fa-moon{% else %}fa-bullseye{% endif %}" aria-hidden="true"></i>
+            </span>
+            <div class="ht-goal-copy">
+              <strong>{{ goal.goal_name }}</strong>
+              <small>{{ goal.current_value|floatformat:0 }} / {{ goal.target_value|default:"—"|floatformat:0 }} {{ goal.unit }}</small>
+              <div class="ht-goal-track" aria-hidden="true"><span style="width:{{ goal.progress }}%"></span></div>
+            </div>
+            <span class="ht-goal-percent">{{ goal.progress }}%</span>
+          </a>
+          {% empty %}
+          <div class="ht-panel-empty">
+            <i class="fa-regular fa-calendar-check" aria-hidden="true"></i>
+            <div>
+              <span>No active goals yet.</span>
+              <a href="{% url 'info:health_create' slug='goals' %}">Create a goal</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="ht-panel ht-reminders-panel" aria-labelledby="reminders-title">
+        <header class="ht-panel-heading">
+          <h2 id="reminders-title">
+            <i class="fa-solid fa-bell" aria-hidden="true"></i>Upcoming reminders
+            {% if reminder_count %}<span class="ht-count-badge">{{ reminder_count }}</span>{% endif %}
+          </h2>
+          <a href="{% url 'info:health_list' slug='reminders' %}">View all</a>
+        </header>
+        <div class="ht-reminder-list">
+          {% for reminder in upcoming_reminders %}
+          <a class="ht-reminder-row" href="{% url 'info:health_list' slug='reminders' %}">
+            <span class="ht-reminder-icon ht-reminder-{{ reminder.reminder_type|lower }}">
+              <i class="fa-solid {% if reminder.reminder_type == 'Water' %}fa-droplet{% elif reminder.reminder_type == 'Medication' %}fa-pills{% elif reminder.reminder_type == 'Exercise' %}fa-person-running{% elif reminder.reminder_type == 'Sleep' %}fa-moon{% else %}fa-calendar-check{% endif %}" aria-hidden="true"></i>
+            </span>
+            <div class="ht-reminder-copy">
+              <strong>{{ reminder.reminder_title }}</strong>
+              <small>{{ reminder.reminder_date|date:"M j" }} · {{ reminder.reminder_time|time:"g:i A" }}</small>
+            </div>
+            <span class="ht-status-pill">{{ reminder.status }}</span>
+          </a>
+          {% empty %}
+          <div class="ht-panel-empty">
+            <i class="fa-regular fa-bell-slash" aria-hidden="true"></i>
+            <div>
+              <span>Nothing scheduled. Enjoy the space.</span>
+              <a href="{% url 'info:health_create' slug='reminders' %}">Add reminder</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
     </div>
   </div>
 
+  <div class="ht-lower-grid">
+    <section class="ht-panel ht-recent-panel" id="recent-health-records" aria-labelledby="recent-title">
+      <header class="ht-panel-heading">
+        <h2 id="recent-title"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>Recent health records</h2>
+        <a href="{% url 'info:health_list' slug='measurements' %}">View all</a>
+      </header>
+      <div class="table-responsive">
+        <table class="table table-vcenter ht-recent-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Record</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in recent_records %}
+            <tr>
+              <td class="text-nowrap">{{ record.date_label }}</td>
+              <td><span class="ht-record-type">{{ record.category }}</span></td>
+              <td>{{ record.details }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="3" class="ht-recent-empty">
+                <i class="fa-regular fa-folder-open mb-1 d-block" aria-hidden="true"></i>
+                Your recent health entries will appear here.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <nav class="ht-shortcuts" aria-label="Health tracker shortcuts">
+      <a href="{% url 'info:health_create' slug='activities' %}" class="ht-shortcut-card">
+        <span class="ht-shortcut-icon ht-shortcut-green"><i class="fa-solid fa-plus" aria-hidden="true"></i></span>
+        <strong>Add health record</strong>
+        <small>Record today's activity</small>
+      </a>
+      <a href="{% url 'info:health_list' slug='reports' %}" class="ht-shortcut-card">
+        <span class="ht-shortcut-icon ht-shortcut-blue"><i class="fa-solid fa-chart-column" aria-hidden="true"></i></span>
+        <strong>View reports</strong>
+        <small>Review your history</small>
+      </a>
+      <a href="{% url 'info:health_create' slug='goals' %}" class="ht-shortcut-card">
+        <span class="ht-shortcut-icon ht-shortcut-coral"><i class="fa-solid fa-bullseye" aria-hidden="true"></i></span>
+        <strong>Manage goals</strong>
+        <small>Set a new target</small>
+      </a>
+      <a href="#human-body-chart" class="ht-shortcut-card">
+        <span class="ht-shortcut-icon ht-shortcut-teal"><i class="fa-solid fa-person" aria-hidden="true"></i></span>
+        <strong>Body chart</strong>
+        <small>Explore your readings</small>
+      </a>
+    </nav>
+  </div>
 </div>
+
+<script>
+(function () {
+  const regionControls = document.querySelectorAll('[data-region]');
+  const metricButtons = document.querySelectorAll('[data-metric-key]');
+  const metricRows = document.querySelectorAll('.ht-reading-row');
+  const readings = new Map(Array.from(metricButtons, button => [button.dataset.metricKey, button]));
+
+  function selectRegion(control) {
+    const metricKey = control.dataset.metric;
+    const metric = readings.get(metricKey);
+    if (!metric) return;
+
+    const selectedRegion = control.dataset.region;
+    const selectedLabel = control.dataset.label || selectedRegion;
+
+    // Synchronize active state on body markers and chips
+    regionControls.forEach(button => {
+      const active = button.dataset.region === selectedRegion;
+      button.classList.toggle('is-active', active);
+      if (button.matches('button')) button.setAttribute('aria-pressed', String(active));
+    });
+
+    // Synchronize active state on measurement metric rows
+    metricRows.forEach(row => {
+      const active = row.dataset.metricKey === metricKey;
+      row.classList.toggle('is-active', active);
+    });
+
+    // Update the central reading display
+    const regionTitle = document.getElementById('ht-region-title');
+    if (regionTitle) {
+      regionTitle.textContent = selectedLabel + ' · ' + metric.dataset.label;
+    }
+
+    const vitalDate = document.getElementById('ht-vital-date');
+    if (vitalDate) {
+      vitalDate.textContent = metric.dataset.recorded;
+    }
+
+    const vitalIcon = document.getElementById('ht-vital-icon');
+    if (vitalIcon) {
+      vitalIcon.className = 'fa-solid ' + (metric.dataset.icon || 'fa-heart-pulse');
+    }
+
+    const valueEl = document.getElementById('ht-vital-value');
+    if (valueEl) {
+      valueEl.replaceChildren(document.createTextNode(metric.dataset.reading === 'No reading' ? 'No reading' : metric.dataset.reading));
+      if (metric.dataset.reading !== 'No reading' && metric.dataset.unit) {
+        const unit = document.createElement('small');
+        unit.textContent = ' ' + metric.dataset.unit;
+        valueEl.append(unit);
+      }
+    }
+  }
+
+  regionControls.forEach(control => {
+    control.addEventListener('click', () => selectRegion(control));
+  });
+
+  metricRows.forEach(row => {
+    row.addEventListener('click', () => {
+      const metricKey = row.dataset.metricKey;
+      const relatedRegion = Array.from(regionControls).find(control => control.dataset.metric === metricKey);
+      if (relatedRegion) {
+        selectRegion(relatedRegion);
+      }
+    });
+  });
+
+  const initial = document.querySelector('.ht-body-part.is-active') || document.querySelector('.ht-body-part');
+  if (initial) {
+    selectRegion(initial);
+  }
+})();
+</script>
 {% endblock %}

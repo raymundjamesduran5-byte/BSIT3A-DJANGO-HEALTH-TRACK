@@ -2,158 +2,99 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>
-    Sign in - Azuelo Technology
-  </title>
-  <link href="{% static 'libs/jsvectormap/dist/jsvectormap.css' %}" rel="stylesheet" />
-  <link href="{% static 'css/tabler.css' %}" rel="stylesheet" />
-  <link href="{% static 'css/tabler-flags.css' %}" rel="stylesheet" />
-  <link href="{% static 'css/tabler-socials.css' %}" rel="stylesheet" />
-  <link href="{% static 'css/tabler-payments.css' %}" rel="stylesheet" />
-  <link href="{% static 'css/tabler-vendors.css' %}" rel="stylesheet" />
-  <link href="{% static 'css/tabler-marketing.css' %}" rel="stylesheet" />
-  <link href="{% static 'css/tabler-themes.css' %}" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#eff8f4">
+  <title>Log in - HealthTrack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="{% static 'css/tabler.css' %}" rel="stylesheet">
+  <link href="{% static 'css/healtrack-login.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+<body class="heal-auth-body">
+  <main class="heal-auth-layout">
+    <section class="heal-story" aria-labelledby="story-title">
+      <a class="heal-brand" href="{% url 'login' %}" aria-label="HealthTrack home">
+        <span class="heal-brand-mark"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
+        <span>Health<span>Track</span></span>
+      </a>
 
-<body>
-  <script src="{% static 'js/tabler-theme.js' %}"></script>
-  <div class="page page-center">
-    <div class="container container-tight py-4">
+      <div class="heal-story-content">
+        <p class="heal-overline"><span></span> YOUR HEALTH, IN YOUR HANDS</p>
+        <h1 id="story-title">Take control<br>of your <em>health.</em></h1>
+        <p class="heal-story-copy">Small steps add up. Keep your routines, records, and goals moving in one clear direction.</p>
+        <div class="heal-illustration-wrap">
+          <img src="{% static 'images/healtrack-health.svg' %}" alt="Illustration of a person checking in on their heart health">
+        </div>
+        <ul class="heal-highlights">
+          <li><span class="heal-highlight-icon"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></span><span><strong>See your progress</strong><small>Notice the good habits taking shape.</small></span></li>
+          <li><span class="heal-highlight-icon"><i class="fa-solid fa-heart-circle-check" aria-hidden="true"></i></span><span><strong>Keep health details together</strong><small>Your records, ready when you need them.</small></span></li>
+          <li><span class="heal-highlight-icon"><i class="fa-solid fa-bullseye" aria-hidden="true"></i></span><span><strong>Make goals feel manageable</strong><small>Build consistency one day at a time.</small></span></li>
+        </ul>
+      </div>
 
-     <div class="card card-md">
-      <div class="card-body">
+      <p class="heal-story-footer">A little more awareness. A lot more you.</p>
+    </section>
 
-        <center class="mt-n4">
-        <i class='far fa-calendar' style='font-size:40px'></i>
-        </center>
-        <h2 class="h3 text-center mb-4">Sign in to start your session</h2>
+    <section class="heal-login-panel" aria-labelledby="login-title">
+      <div class="heal-login-content">
+        <div class="heal-mobile-brand heal-brand" aria-hidden="true">
+          <span class="heal-brand-mark"><i class="fa-solid fa-heart-pulse"></i></span>
+          <span>Health<span>Track</span></span>
+        </div>
+        <div class="heal-form-intro">
+          <p class="heal-form-kicker">YOUR HEALTH. YOUR PROGRESS. YOUR FUTURE.</p>
+          <h2 id="login-title">Welcome back!</h2>
+          <p>Log in to your account to continue.</p>
+        </div>
 
-        <form method="post">
-          {% csrf_token %}
-
-          {% if messages %}
+        {% if messages %}
           {% for message in messages %}
-          <div id="error-message" class="alert alert-danger">
-            {{ message }}
-          </div>
+          <div id="error-message" class="heal-alert" role="alert">{{ message }}</div>
           {% endfor %}
-          {% endif %}
-          <div class="mb-3">
-            <label class="form-label">Username</label>
-            <input type="text" class="form-control" name="username" autocomplete="off" {% if locked %}disabled{% endif %}>
-          </div>
-          <div class="mb-2">
-            <label class="form-label">
-              Password
-            </label>
-            <div class="input-group input-group-flat">
-              <input type="password" class="form-control" name="password" autocomplete="off" {% if locked %}disabled{% endif %}>
+        {% endif %}
+
+        <form class="heal-login-form" method="post" novalidate>
+          {% csrf_token %}
+          <div class="heal-field">
+            <label for="email">Email address</label>
+            <div class="heal-input-wrap">
+              <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+              <input id="email" type="email" name="email" value="{{ form_email|default:'' }}" autocomplete="email" placeholder="you@example.com" required {% if locked %}disabled{% endif %}>
             </div>
           </div>
-          <div class="form-footer d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary w-50">
-              <i class="fas fa-sign-in-alt me-1"></i> Sign in
-            </button>
+          <div class="heal-field">
+            <label for="password">Password</label>
+            <div class="heal-input-wrap">
+              <i class="fa-solid fa-lock" aria-hidden="true"></i>
+              <input id="password" type="password" name="password" autocomplete="current-password" placeholder="Enter your password" required {% if locked %}disabled{% endif %}>
+              <button class="heal-password-toggle" type="button" aria-label="Show password" title="Show password" {% if locked %}disabled{% endif %}><i class="fa-regular fa-eye" aria-hidden="true"></i></button>
+            </div>
           </div>
-       </form>
-     </div>
-   </div>
- </div>
- <!-- <div class="text-center text-secondary mt-n1">
-  Don't have an account?
-  <a href="{% url 'register' %}" class="text-primary fw-bold">Register</a>
- </div> -->
-</div>
+          <div class="heal-form-options">
+            <label class="heal-remember"><input type="checkbox" name="remember_me" value="on"><span class="heal-checkmark"></span><span>Remember me</span></label>
+            <a class="heal-forgot" href="{% url 'password_reset' %}">Forgot password?</a>
+          </div>
+          <button class="heal-submit" type="submit" {% if locked %}disabled{% endif %}>Log in <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+        </form>
 
-{% include 'theme/settings.html' %}
-
-<script src="{% static 'js/tabler.js' %}" defer></script>
-<script src="{% static 'js/demo.js' %}" defer></script>
-{% if locked %}
-<script>
-  let remaining = {{ remaining }};
-  const messageBox = document.getElementById("error-message");
-
-  let interval = setInterval(function() {
-    remaining--;
-
-    if (remaining > 0) {
-      messageBox.innerHTML =
-      "Too many failed attempts. Try again in " + remaining + " seconds.";
-    } else {
-      clearInterval(interval);
-      window.location.href = "{% url 'login' %}";
-    }
-
-  }, 1000);
-</script>
-{% endif %}
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    var themeConfig = {
-      theme: "light",
-      "theme-base": "gray",
-      "theme-font": "sans-serif",
-      "theme-primary": "blue",
-      "theme-radius": "1",
-    };
-
-    var url = new URL(window.location);
-    var form = document.getElementById("offcanvasSettings");
-    var resetButton = document.getElementById("reset-changes");
-
-    var checkItems = function () {
-      for (var key in themeConfig) {
-        var value =
-        window.localStorage["tabler-" + key] || themeConfig[key];
-
-        if (!!value) {
-          var radios = form.querySelectorAll(`[name="${key}"]`);
-
-          if (!!radios) {
-            radios.forEach((radio) => {
-              radio.checked = radio.value === value;
-            });
-          }
-        }
-      }
-    };
-
-    form.addEventListener("change", function (event) {
-      var target = event.target,
-      name = target.name,
-      value = target.value;
-
-      for (var key in themeConfig) {
-        if (name === key) {
-          document.documentElement.setAttribute("data-bs-" + key, value);
-          window.localStorage.setItem("tabler-" + key, value);
-          url.searchParams.set(key, value);
-        }
-      }
-
-      window.history.pushState({}, "", url);
+        <div class="heal-account-prompt"><span>New to HealthTrack?</span><a href="{% url 'register' %}">Create an account</a></div>
+        <p class="heal-privacy"><i class="fa-solid fa-shield-heart" aria-hidden="true"></i> Your health information stays private to your account.</p>
+      </div>
+    </section>
+  </main>
+  <script>
+    const passwordInput = document.getElementById('password');
+    const passwordToggle = document.querySelector('.heal-password-toggle');
+    passwordToggle.addEventListener('click', function () {
+      const reveal = passwordInput.type === 'password';
+      passwordInput.type = reveal ? 'text' : 'password';
+      passwordToggle.setAttribute('aria-label', reveal ? 'Hide password' : 'Show password');
+      passwordToggle.setAttribute('title', reveal ? 'Hide password' : 'Show password');
+      passwordToggle.innerHTML = `<i class="fa-regular ${reveal ? 'fa-eye-slash' : 'fa-eye'}" aria-hidden="true"></i>`;
     });
-
-    resetButton.addEventListener("click", function () {
-      for (var key in themeConfig) {
-        var value = themeConfig[key];
-        document.documentElement.removeAttribute("data-bs-" + key);
-        window.localStorage.removeItem("tabler-" + key);
-        url.searchParams.delete(key);
-      }
-
-      checkItems();
-
-      window.history.pushState({}, "", url);
-    });
-
-    checkItems();
-  });
-</script>
+  </script>
 </body>
 </html>

@@ -1,0 +1,2306 @@
+/* ==========================================================================
+   HealthTrack - Main Stylesheet (Clean, Modern Spacing)
+   ========================================================================== */
+
+:root {
+  --tblr-primary: #0d7a70;
+  --tblr-primary-rgb: 13, 122, 112;
+  --tblr-primary-hover: #0b655d;
+  --tblr-body-bg: #f4f8f7;
+
+  --ht-navy: #173d3b;
+  --ht-ink: #1e3a47;
+  --ht-muted: #647e82;
+  --ht-line: #ddeae6;
+  --ht-surface: #ffffff;
+  --ht-topbar: #0c6562;
+
+  --ht-green: #1a9a7e;
+  --ht-green-soft: #e6f8f2;
+  --ht-blue: #2f7fe3;
+  --ht-blue-soft: #ebf4ff;
+  --ht-orange: #ec8c42;
+  --ht-orange-soft: #fff1e8;
+  --ht-purple: #7d5cd8;
+  --ht-purple-soft: #f2ecff;
+  --ht-coral: #d76457;
+  --ht-coral-soft: #ffeceb;
+  --ht-gold: #cf8d1f;
+  --ht-gold-soft: #fff4df;
+  --ht-teal: #0d7a70;
+  --ht-teal-soft: #eaf8f5;
+}
+
+body {
+  background: linear-gradient(180deg, #f7faf9 0%, #f3f7f6 100%);
+  color: var(--ht-ink);
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Container Full-Width with Max Limit */
+.container-xl {
+  width: 100%;
+  max-width: 1680px;
+  padding-right: 1.25rem;
+  padding-left: 1.25rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* ==========================================================================
+   Topbar
+   ========================================================================== */
+.ht-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  display: flex;
+  height: 60px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.25rem;
+  background: linear-gradient(135deg, #0b5f5b 0%, #0d736c 100%);
+  color: #fff;
+  box-shadow: 0 10px 28px rgba(12, 86, 82, 0.18);
+}
+
+.ht-topbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.ht-topbar-brand:hover {
+  color: #fff;
+}
+
+.ht-topbar-mark {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #b9eee2;
+  color: #08796e;
+  font-size: 1.05rem;
+}
+
+.ht-topbar-brand strong {
+  display: block;
+  font-family: Manrope, "DM Sans", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.ht-topbar-brand small {
+  display: block;
+  margin-top: 1px;
+  color: #d6eeeb;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.ht-topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.ht-notification-link {
+  position: relative;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.ht-notification-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.ht-notification-link span {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  display: grid;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  place-items: center;
+  border-radius: 99px;
+  background: #fa635e;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+
+.ht-topbar-account {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.ht-topbar-account:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.ht-topbar-avatar {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 2px solid #bde7dd;
+  border-radius: 50%;
+  background: #dcefeb;
+  color: #165e54;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.ht-topbar-account strong {
+  display: block;
+  font-size: 0.825rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ht-topbar-account small {
+  display: block;
+  color: #d2e9e6;
+  font-size: 0.68rem;
+}
+
+.ht-topbar-logout {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 8px;
+  color: #d9eeeb;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.ht-topbar-logout:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.ht-mobile-menu {
+  display: none;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+  border-radius: 6px;
+}
+
+/* ==========================================================================
+   Sidebar
+   ========================================================================== */
+.page {
+  display: flex;
+  flex-direction: row;
+  min-height: calc(100vh - 56px);
+}
+
+.page-wrapper {
+  flex: 1 1 auto;
+  min-width: 0;
+  /* Tabler adds margin-left: 15rem to .page-wrapper when a navbar-vertical is
+     a sibling. We use flexbox for layout so this extra margin must be zeroed. */
+  margin-left: 0 !important;
+}
+
+.page-body {
+  display: block;
+  padding: 0.75rem 0 1.5rem;
+  margin: 0;
+}
+
+.dh-sidebar.navbar-vertical {
+  position: sticky;
+  top: 56px;
+  align-self: flex-start;
+  width: 240px;
+  min-width: 240px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  background: linear-gradient(180deg, #0b4651, #083744);
+  box-shadow: 2px 0 10px rgba(8, 55, 68, 0.08);
+}
+
+.dh-sidebar .dh-brand {
+  display: none;
+}
+
+.dh-sidebar .navbar-toggler {
+  display: none;
+}
+
+.dh-sidebar .navbar-collapse {
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dh-sidebar .navbar-nav {
+  width: 100%;
+  padding: 0.4rem 0.55rem 0.85rem;
+}
+
+.dh-sidebar .dh-nav-section {
+  display: block;
+  padding: 0.65rem 0.65rem 0.25rem;
+  color: #8dbfc2;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dh-sidebar .navbar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 38px;
+  padding: 0.48rem 0.7rem;
+  margin-bottom: 2px;
+  border-radius: 7px;
+  color: #d1e5e8;
+  font-size: 0.825rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.dh-sidebar .navbar-nav .nav-link:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #fff;
+}
+
+.dh-sidebar .navbar-nav .nav-link.active {
+  background: #0b8582;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(11, 133, 130, 0.25);
+}
+
+.dh-sidebar .nav-link-icon {
+  width: 1.2rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.dh-sidebar .nav-link-title {
+  flex: 1 1 auto;
+}
+
+.dh-sidebar .nav-link > .fa-chevron-down {
+  font-size: 0.68rem;
+  transition: transform 0.18s ease;
+}
+
+.dh-sidebar .nav-link[aria-expanded="true"] > .fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.ht-subnav-link {
+  display: flex !important;
+  align-items: center;
+  min-height: 30px !important;
+  margin-left: 1.35rem !important;
+  padding: 0.3rem 0.6rem !important;
+  border-radius: 6px !important;
+  color: #b2d5d9 !important;
+  font-size: 0.78rem !important;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.ht-subnav-link:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.ht-subnav-link::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  background: #71beb0;
+}
+
+.dh-sidebar .dh-nav-sidebar-footer {
+  margin-top: auto;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dh-user-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dh-avatar {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #b9e4dd;
+  color: #0b655e;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.dh-user-name {
+  display: block;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.dh-user-role {
+  display: block;
+  color: #a4cbd0;
+  font-size: 0.68rem;
+}
+
+.dh-user-logout {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 6px;
+  color: #a4cbd0;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.dh-user-logout:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* ==========================================================================
+   Dashboard Layout & Spacing
+   ========================================================================== */
+.ht-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--ht-navy);
+}
+
+/* Welcome Row */
+.ht-welcome-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 0 0.45rem;
+}
+
+.ht-welcome-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.ht-welcome-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--ht-teal-soft);
+  color: var(--ht-teal);
+  font-size: 1.35rem;
+}
+
+.ht-welcome-copy .ht-eyebrow {
+  margin: 0 0 0.15rem;
+  color: #27778a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.ht-date-divider {
+  padding: 0 0.3rem;
+  color: #9ab5c2;
+}
+
+.ht-welcome-copy h1 {
+  margin: 0;
+  color: #123447;
+  font-family: Manrope, "DM Sans", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.ht-welcome-sub {
+  margin: 0.15rem 0 0;
+  color: var(--ht-muted);
+  font-size: 0.8rem;
+}
+
+.ht-quote-banner {
+  position: relative;
+  display: flex;
+  width: min(36%, 390px);
+  min-height: 58px;
+  align-items: center;
+  gap: 0.75rem;
+  overflow: hidden;
+  padding: 0.55rem 1rem;
+  border-radius: 9px;
+  background: #d8f2eb;
+  color: #1d6a62;
+  box-shadow: 0 1px 6px rgba(29, 106, 98, 0.06);
+}
+
+.ht-quote-icon {
+  z-index: 1;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #bce9dc;
+  color: #07877a;
+  font-size: 1.05rem;
+}
+
+.ht-quote-banner p {
+  z-index: 1;
+  margin: 0;
+  color: #20625b;
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.ht-quote-leaf {
+  position: absolute;
+  right: 12px;
+  bottom: -10px;
+  width: 22px;
+  height: 38px;
+  transform: rotate(38deg);
+  border-radius: 100% 0 100% 0;
+  background: #90d1ba;
+  opacity: 0.65;
+}
+
+.ht-quote-leaf-two {
+  right: 32px;
+  bottom: -14px;
+  transform: rotate(-25deg);
+  background: #6fbea5;
+}
+
+.ht-quote-leaf-three {
+  right: -2px;
+  bottom: -11px;
+  transform: rotate(5deg);
+  background: #53a990;
+}
+
+/* ==========================================================================
+   Metric Cards Grid
+   ========================================================================== */
+.ht-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.ht-metric {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 98px;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid rgba(13, 122, 112, 0.09);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(15, 42, 45, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ht-metric:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px rgba(18, 51, 64, 0.08);
+}
+
+.ht-metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.ht-metric-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--metric-soft);
+  color: var(--metric-color);
+  font-size: 0.95rem;
+}
+
+.ht-metric-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 99px;
+  background: var(--metric-soft);
+  color: var(--metric-color);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.ht-metric-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ht-metric-label {
+  color: var(--ht-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.ht-metric-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.ht-metric-value strong {
+  color: var(--ht-navy);
+  font-family: Manrope, "DM Sans", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.ht-metric-target {
+  color: var(--ht-muted);
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.ht-metric-track {
+  width: 100%;
+  height: 5px;
+  margin-top: 0.25rem;
+  overflow: hidden;
+  border-radius: 99px;
+  background: var(--metric-soft);
+}
+
+.ht-metric-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--metric-color);
+  transition: width 0.3s ease;
+}
+
+.ht-metric-green { --metric-color: var(--ht-green); --metric-soft: var(--ht-green-soft); }
+.ht-metric-blue { --metric-color: var(--ht-blue); --metric-soft: var(--ht-blue-soft); }
+.ht-metric-orange { --metric-color: var(--ht-orange); --metric-soft: var(--ht-orange-soft); }
+.ht-metric-purple { --metric-color: var(--ht-purple); --metric-soft: var(--ht-purple-soft); }
+
+/* ==========================================================================
+   Panel Common Styles
+   ========================================================================== */
+.ht-panel {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(13, 122, 112, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 24px rgba(18, 51, 64, 0.04);
+}
+
+.ht-panel-heading {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid var(--ht-line);
+}
+
+.ht-panel-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  color: var(--ht-navy);
+  font-family: Manrope, "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 750;
+}
+
+.ht-panel-heading h2 > i {
+  color: var(--ht-teal);
+  font-size: 0.95rem;
+}
+
+.ht-panel-heading > a {
+  color: var(--tblr-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ht-panel-heading > a:hover {
+  text-decoration: underline;
+}
+
+.ht-panel-subtitle {
+  margin: 0.15rem 0 0 1.45rem;
+  color: var(--ht-muted);
+  font-size: 0.72rem;
+}
+
+/* ==========================================================================
+   Overview Grid (3 Columns)
+   ========================================================================== */
+.ht-overview-grid {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1.4fr) 310px;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+/* Health Profile Panel */
+.ht-profile-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.ht-profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid #edf2f5;
+  background: #fbfdfc;
+}
+
+.ht-profile-avatar {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 2px solid #d8eee7;
+  border-radius: 50%;
+  background: #c7eae1;
+  color: #0b655a;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.ht-profile-name-block {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.ht-profile-name-block strong {
+  display: block;
+  overflow: hidden;
+  color: var(--ht-navy);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ht-profile-name-block small {
+  display: block;
+  overflow: hidden;
+  color: var(--ht-muted);
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ht-profile-details {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+}
+
+.ht-profile-details > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+  min-height: 22px;
+}
+
+.ht-profile-details dt {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ht-muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.ht-profile-details dt i {
+  width: 14px;
+  color: #3b7c96;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.ht-profile-details dd {
+  margin: 0;
+  max-width: 60%;
+  overflow: hidden;
+  color: var(--ht-navy);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ht-pill-chip {
+  display: inline-block;
+  padding: 0.12rem 0.45rem;
+  border-radius: 99px;
+  background: #eaf3f8;
+  color: #1a5676;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.ht-profile-divider {
+  height: 1px;
+  margin: 0.2rem 0.85rem;
+  background: #e9eff2;
+}
+
+.ht-emergency-contact {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0.45rem 0.75rem 0.75rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 7px;
+  background: #fdf2f2;
+  border: 1px solid #f9dede;
+  color: #c93b48;
+}
+
+.ht-emergency-contact > i {
+  padding-top: 0.12rem;
+  font-size: 0.85rem;
+}
+
+.ht-emergency-contact strong {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.ht-emergency-contact small {
+  display: block;
+  margin-top: 1px;
+  color: #794d57;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+/* ==========================================================================
+   Human Body Chart Panel
+   ========================================================================== */
+.ht-human-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.ht-body-panel-heading {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.ht-anatomy-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.9rem;
+  padding: 1rem;
+}
+
+.ht-anatomy-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  padding: 0.5rem;
+  border: 1px solid var(--ht-line);
+  border-radius: 12px;
+  background: #f8fbfa;
+}
+
+.ht-anatomy-figure {
+  position: relative;
+  width: min(100%, 420px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.ht-anatomy-figure > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.ht-anatomy-view-labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(100%, 420px);
+  margin: 0.45rem auto 0;
+  color: #547483;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.ht-anatomy-marker {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--marker-color);
+  box-shadow: 0 1px 5px rgba(18, 51, 64, 0.22);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ht-anatomy-marker span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.ht-anatomy-marker:hover,
+.ht-anatomy-marker.is-active {
+  z-index: 3;
+  transform: translate(-50%, -50%) scale(1.28);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.9), 0 2px 8px rgba(18, 51, 64, 0.22);
+}
+
+.ht-marker-coral { --marker-color: #e25845; }
+.ht-marker-blue { --marker-color: #2788e6; }
+.ht-marker-gold { --marker-color: #d9911e; }
+.ht-marker-green { --marker-color: #109477; }
+.ht-marker-mint { --marker-color: #2e9f8f; }
+
+.ht-anatomy-disclaimer {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--ht-muted);
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.ht-anatomy-disclaimer i {
+  color: var(--ht-blue);
+}
+
+.ht-anatomy-readings {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.7rem;
+}
+
+.ht-anatomy-reading {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 0.8rem;
+  border-radius: 8px;
+  background: #edf9f5;
+  border: 1px solid #d7eee6;
+}
+
+.ht-anatomy-reading-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 9px;
+  background: #d8f1e9;
+  color: var(--ht-teal);
+  font-size: 1.1rem;
+}
+
+.ht-anatomy-reading-text {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.ht-anatomy-reading-text small {
+  display: block;
+  color: var(--ht-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.ht-anatomy-reading-text strong {
+  display: block;
+  margin: 1px 0;
+  color: var(--ht-navy);
+  font-family: Manrope, "DM Sans", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.ht-anatomy-reading-text strong small {
+  display: inline;
+  color: var(--ht-muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.ht-anatomy-reading-text em {
+  display: block;
+  color: #7d96a4;
+  font-size: 0.68rem;
+  font-style: normal;
+}
+
+/* Measurements list */
+.ht-reading-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem 0.5rem;
+}
+
+.ht-reading-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ht-ink);
+  font-size: 0.78rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ht-reading-row:hover {
+  background: #f1f7f6;
+  border-color: #dcece8;
+}
+
+.ht-reading-row.is-active {
+  background: #e6f5f0;
+  border-color: #bce0d5;
+  font-weight: 600;
+}
+
+.ht-part-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--marker-color);
+}
+
+.ht-reading-label {
+  flex: 1 1 auto;
+  color: var(--ht-navy);
+  font-size: 0.78rem;
+}
+
+.ht-reading-val {
+  color: var(--ht-navy);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.ht-reading-val small {
+  margin-left: 3px;
+  color: var(--ht-muted);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* Body parts chips: 3 columns */
+.ht-body-part-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+  padding: 0.15rem 0;
+}
+
+.ht-body-part {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.45rem;
+  border: 1px solid #e3edf0;
+  border-radius: 5px;
+  background: #fff;
+  color: var(--ht-ink);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ht-body-part:hover {
+  background: #f0f7f5;
+  border-color: #c4e4da;
+  color: var(--ht-teal);
+}
+
+.ht-body-part.is-active {
+  background: #e2f4ed;
+  border-color: #9cd4c3;
+  color: #076d63;
+  font-weight: 700;
+}
+
+.ht-chart-record-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 7px;
+  background: #e9f7f3;
+  border: 1px solid #c2e8dd;
+  color: var(--ht-teal);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.ht-chart-record-link:hover {
+  background: var(--ht-teal);
+  color: #fff;
+}
+
+/* ==========================================================================
+   Goals and Reminders (Right Column)
+   ========================================================================== */
+.ht-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ht-goals-panel,
+.ht-reminders-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.ht-goal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.6rem 0.85rem;
+}
+
+.ht-goal-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid #eaf0f3;
+  border-radius: 7px;
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.ht-goal-row:hover {
+  border-color: #bde4d8;
+  background: #f9fdfb;
+}
+
+.ht-goal-icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #e6f6f1;
+  color: var(--ht-green);
+  font-size: 0.85rem;
+}
+
+.ht-goal-2 .ht-goal-icon { background: #eaf3fd; color: var(--ht-blue); }
+.ht-goal-3 .ht-goal-icon { background: #f2ecfc; color: var(--ht-purple); }
+.ht-goal-4 .ht-goal-icon { background: #fef1e8; color: var(--ht-orange); }
+
+.ht-goal-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.ht-goal-copy strong {
+  overflow: hidden;
+  color: var(--ht-navy);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ht-goal-copy small {
+  color: var(--ht-muted);
+  font-size: 0.72rem;
+}
+
+.ht-goal-track {
+  width: 100%;
+  height: 4px;
+  margin-top: 2px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #eaf1f4;
+}
+
+.ht-goal-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ht-green);
+}
+
+.ht-goal-2 .ht-goal-track span { background: var(--ht-blue); }
+.ht-goal-3 .ht-goal-track span { background: var(--ht-purple); }
+.ht-goal-4 .ht-goal-track span { background: var(--ht-orange); }
+
+.ht-goal-percent {
+  color: var(--ht-teal);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.ht-count-badge {
+  display: inline-grid;
+  min-width: 17px;
+  height: 17px;
+  margin-left: 0.35rem;
+  padding: 0 3px;
+  place-items: center;
+  border-radius: 99px;
+  background: #f8676a;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.ht-reminder-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem 0.85rem 0.6rem;
+}
+
+.ht-reminder-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.25rem;
+  border-bottom: 1px solid #edf3f5;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.ht-reminder-row:last-child {
+  border-bottom: 0;
+}
+
+.ht-reminder-row:hover {
+  background: #f9fcfb;
+}
+
+.ht-reminder-icon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #eaf5f2;
+  color: var(--ht-teal);
+  font-size: 0.8rem;
+}
+
+.ht-reminder-water { background: #eaf3fe; color: var(--ht-blue); }
+.ht-reminder-medication { background: #f2ebfc; color: var(--ht-purple); }
+.ht-reminder-exercise { background: #fef1e8; color: var(--ht-orange); }
+.ht-reminder-sleep { background: #f2ebfc; color: var(--ht-purple); }
+
+.ht-reminder-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.ht-reminder-copy strong {
+  display: block;
+  overflow: hidden;
+  color: var(--ht-navy);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ht-reminder-copy small {
+  display: block;
+  margin-top: 1px;
+  color: var(--ht-muted);
+  font-size: 0.72rem;
+}
+
+.ht-status-pill {
+  flex: 0 0 auto;
+  padding: 0.15rem 0.5rem;
+  border-radius: 5px;
+  background: #e3f5ed;
+  color: #128263;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.ht-panel-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 75px;
+  padding: 0.75rem;
+  color: var(--ht-muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.ht-panel-empty i {
+  font-size: 1.35rem;
+  color: #a4bcc9;
+}
+
+.ht-panel-empty a {
+  margin-left: 0.3rem;
+  color: var(--ht-teal);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ht-panel-empty a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Lower Grid (Recent records & Shortcuts)
+   ========================================================================== */
+.ht-lower-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(340px, 1fr);
+  gap: 0.85rem;
+  align-items: stretch;
+}
+
+.ht-recent-panel {
+  align-self: start;
+}
+
+.ht-recent-table {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.ht-recent-table thead th {
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid #dbe6eb;
+  background: #fafcfd;
+  color: var(--ht-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ht-recent-table tbody td {
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid #edf3f5;
+  color: var(--ht-ink);
+  vertical-align: middle;
+}
+
+.ht-record-type {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 99px;
+  background: #e8f4f2;
+  color: #0d7967;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.ht-recent-empty {
+  padding: 1.5rem !important;
+  color: var(--ht-muted);
+  text-align: center;
+}
+
+.ht-recent-empty i {
+  font-size: 1.35rem;
+  color: #a6c0cd;
+}
+
+/* Shortcuts: 2x2 Grid */
+.ht-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  height: 100%;
+}
+
+.ht-shortcut-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 92px;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid var(--ht-line);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--ht-navy);
+  text-decoration: none;
+  box-shadow: 0 1px 6px rgba(18, 51, 64, 0.04);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ht-shortcut-card:hover {
+  transform: translateY(-2px);
+  border-color: #8ed0c2;
+  box-shadow: 0 5px 14px rgba(16, 148, 119, 0.1);
+  color: var(--ht-navy);
+}
+
+.ht-shortcut-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 0.45rem;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.ht-shortcut-green { background: #139d7f; }
+.ht-shortcut-blue { background: #2b84e6; }
+.ht-shortcut-coral { background: #ea7035; }
+.ht-shortcut-teal { background: #077c75; }
+
+.ht-shortcut-card strong {
+  display: block;
+  overflow: hidden;
+  max-width: 100%;
+  font-size: 0.8rem;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ht-shortcut-card small {
+  display: block;
+  margin-top: 1px;
+  color: var(--ht-muted);
+  font-size: 0.7rem;
+}
+
+/* ==========================================================================
+   Compatibility Styles for Info, Records and Forms
+   ========================================================================== */
+.ht-page-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.4rem 0 1.25rem;
+}
+
+.ht-page-heading h1 {
+  margin: 0;
+  color: var(--ht-navy);
+  font-family: Manrope, "DM Sans", sans-serif;
+  font-size: 1.65rem;
+  font-weight: 800;
+}
+
+.ht-eyebrow {
+  margin: 0 0 0.3rem;
+  color: var(--ht-teal);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ht-section {
+  min-width: 0;
+  padding: 0.85rem 0;
+}
+
+.ht-record-section {
+  padding-top: 0;
+}
+
+.ht-record-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.ht-record-toolbar h2 {
+  margin: 0;
+  color: var(--ht-navy);
+  font-family: Manrope, "DM Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 750;
+}
+
+.ht-record-toolbar p {
+  margin: 0.15rem 0 0;
+  color: var(--ht-muted);
+  font-size: 0.8rem;
+}
+
+.ht-search-form {
+  width: min(100%, 400px);
+}
+
+.ht-record-table {
+  margin-bottom: 0;
+  font-size: 0.85rem;
+}
+
+.ht-record-table th {
+  color: var(--ht-muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ht-record-table td {
+  max-width: 280px;
+  overflow-wrap: anywhere;
+  vertical-align: middle;
+}
+
+.ht-record-table form {
+  display: inline-flex;
+}
+
+/* Quick status buttons: check = completed, cross = cancelled */
+.ht-status-btn {
+  border: 1px solid var(--ht-line);
+  background: #fff;
+  color: var(--ht-muted);
+  transition: all 0.15s ease;
+}
+
+.ht-status-btn:hover {
+  border-color: currentColor;
+}
+
+.ht-status-complete {
+  color: var(--ht-green);
+}
+
+.ht-status-complete:hover {
+  background: var(--ht-green-soft);
+}
+
+.ht-status-complete.is-active {
+  border-color: var(--ht-green);
+  background: var(--ht-green);
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(26, 154, 126, 0.16);
+}
+
+.ht-status-cancel {
+  color: var(--ht-coral);
+}
+
+.ht-status-cancel:hover {
+  background: var(--ht-coral-soft);
+}
+
+.ht-status-cancel.is-active {
+  border-color: var(--ht-coral);
+  background: var(--ht-coral);
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(215, 100, 87, 0.16);
+}
+
+.ht-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 180px;
+  padding: 1.75rem;
+  color: var(--ht-muted);
+  text-align: center;
+}
+
+.ht-empty-state > i {
+  margin-bottom: 0.2rem;
+  color: var(--ht-teal);
+  font-size: 1.75rem;
+}
+
+.ht-empty-state > strong {
+  color: var(--ht-navy);
+  font-size: 0.95rem;
+}
+
+.ht-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--ht-line);
+  color: var(--ht-muted);
+  font-size: 0.825rem;
+}
+
+.ht-form-section {
+  max-width: 900px;
+}
+
+.ht-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+.ht-form-field {
+  min-width: 0;
+}
+
+.ht-form-field-wide {
+  grid-column: 1 / -1;
+}
+
+.ht-form-field textarea {
+  min-height: 90px;
+}
+
+.ht-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--ht-line);
+}
+
+.dh-footer {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--ht-line);
+  color: var(--ht-muted);
+  font-size: 0.78rem;
+}
+
+/* ==========================================================================
+   Fit-to-viewport dashboard (desktop) - the whole dashboard is visible
+   without scrolling the page. Sections that still hold too much content
+   scroll inside their own panel instead.
+   ========================================================================== */
+@media (min-width: 993px) {
+  body.ht-page-dashboard .page {
+    min-height: 0;
+  }
+
+  body.ht-page-dashboard .dh-sidebar.navbar-vertical {
+    height: calc(100vh - 60px);
+  }
+
+  body.ht-page-dashboard .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+    overflow: hidden;
+  }
+
+  body.ht-page-dashboard .page-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0.5rem 0 0.35rem;
+  }
+
+  body.ht-page-dashboard .page-body > .container-xl {
+    height: 100%;
+  }
+
+  body.ht-page-dashboard .dh-footer {
+    display: none;
+  }
+
+  .ht-dashboard {
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    gap: 0.4rem;
+    height: 100%;
+  }
+
+  .ht-dashboard .ht-overview-grid,
+  .ht-dashboard .ht-lower-grid {
+    min-height: 0;
+  }
+
+  .ht-dashboard .ht-overview-grid > *,
+  .ht-dashboard .ht-lower-grid > * {
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  /* Welcome row */
+  .ht-dashboard .ht-welcome-row {
+    padding: 0;
+  }
+
+  .ht-dashboard .ht-welcome-copy {
+    gap: 0.6rem;
+  }
+
+  .ht-dashboard .ht-welcome-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.05rem;
+  }
+
+  .ht-dashboard .ht-welcome-copy .ht-eyebrow {
+    margin-bottom: 0;
+    font-size: 0.68rem;
+  }
+
+  .ht-dashboard .ht-welcome-copy h1 {
+    font-size: 1rem;
+  }
+
+  .ht-dashboard .ht-welcome-sub {
+    display: none;
+  }
+
+  .ht-dashboard .ht-quote-banner {
+    min-height: 34px;
+    padding: 0.3rem 0.9rem;
+    width: min(34%, 320px);
+  }
+
+  .ht-dashboard .ht-quote-banner p {
+    font-size: 0.7rem;
+  }
+
+  /* Metric cards */
+  .ht-dashboard .ht-metric-grid {
+    gap: 0.45rem;
+  }
+
+  .ht-dashboard .ht-metric {
+    min-height: 0;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .ht-dashboard .ht-metric-top {
+    margin-bottom: 0.1rem;
+  }
+
+  .ht-dashboard .ht-metric-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 0.72rem;
+    border-radius: 7px;
+  }
+
+  .ht-dashboard .ht-metric-badge {
+    padding: 0.08rem 0.4rem;
+    font-size: 0.64rem;
+  }
+
+  .ht-dashboard .ht-metric-label {
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+
+  .ht-dashboard .ht-metric-value strong {
+    font-size: 0.95rem;
+    line-height: 1.1;
+  }
+
+  .ht-dashboard .ht-metric-target {
+    font-size: 0.68rem;
+  }
+
+  .ht-dashboard .ht-metric-track {
+    height: 3px;
+    margin-top: 0.12rem;
+  }
+
+  /* Panel chrome */
+  .ht-dashboard .ht-panel-heading {
+    min-height: 32px;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .ht-dashboard .ht-panel-heading h2 {
+    font-size: 0.82rem;
+  }
+
+  .ht-dashboard .ht-panel-heading > a {
+    font-size: 0.72rem;
+  }
+
+  .ht-dashboard .ht-panel-subtitle {
+    display: none;
+  }
+
+  .ht-dashboard .ht-overview-grid {
+    gap: 0.45rem;
+    grid-template-columns: 256px minmax(0, 1fr) 296px;
+  }
+
+  /* Health profile */
+  .ht-dashboard .ht-profile-identity {
+    gap: 0.5rem;
+    padding: 0.35rem 0.7rem;
+  }
+
+  .ht-dashboard .ht-profile-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.85rem;
+  }
+
+  .ht-dashboard .ht-profile-name-block strong {
+    font-size: 0.84rem;
+    line-height: 1.25;
+  }
+
+  .ht-dashboard .ht-profile-name-block small {
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+
+  .ht-dashboard .ht-profile-details {
+    gap: 0.22rem;
+    padding: 0.35rem 0.7rem;
+  }
+
+  .ht-dashboard .ht-profile-details > div {
+    min-height: 15px;
+  }
+
+  .ht-dashboard .ht-profile-details dt {
+    font-size: 0.71rem;
+    line-height: 1.3;
+  }
+
+  .ht-dashboard .ht-profile-details dt i {
+    display: none;
+  }
+
+  .ht-dashboard .ht-profile-details dd {
+    font-size: 0.73rem;
+    line-height: 1.3;
+  }
+
+  .ht-dashboard .ht-profile-medical {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem 0.6rem;
+  }
+
+  .ht-dashboard .ht-profile-medical > div {
+    min-height: 0;
+  }
+
+  .ht-dashboard .ht-profile-divider {
+    margin: 0.1rem 0.7rem;
+  }
+
+  .ht-dashboard .ht-emergency-contact {
+    margin: 0.2rem 0.6rem 0.35rem;
+    padding: 0.3rem 0.45rem;
+  }
+
+  .ht-dashboard .ht-emergency-contact strong {
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+
+  .ht-dashboard .ht-emergency-contact small {
+    font-size: 0.67rem;
+    line-height: 1.25;
+  }
+
+  /* Human body chart */
+  .ht-dashboard .ht-anatomy-layout {
+    grid-template-columns: minmax(0, 1.35fr) minmax(185px, 1fr);
+    gap: 0.45rem;
+    padding: 0.45rem;
+  }
+
+  .ht-dashboard .ht-anatomy-stage {
+    padding: 0.4rem 0.4rem 0.3rem;
+  }
+
+  .ht-dashboard .ht-anatomy-figure {
+    width: min(100%, 140px);
+  }
+
+  .ht-dashboard .ht-anatomy-marker {
+    width: 13px;
+    height: 13px;
+  }
+
+  .ht-dashboard .ht-anatomy-marker span {
+    width: 4px;
+    height: 4px;
+  }
+
+  .ht-dashboard .ht-anatomy-view-labels {
+    width: min(100%, 140px);
+    margin-top: 0.25rem;
+    font-size: 0.6rem;
+  }
+
+  .ht-dashboard .ht-anatomy-disclaimer {
+    margin-top: 0.25rem;
+    font-size: 0.6rem;
+    line-height: 1.25;
+  }
+
+  .ht-dashboard .ht-anatomy-readings {
+    gap: 0.4rem;
+  }
+
+  .ht-dashboard .ht-anatomy-reading {
+    gap: 0.45rem;
+    padding: 0.3rem 0.45rem;
+  }
+
+  .ht-dashboard .ht-anatomy-reading-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.82rem;
+  }
+
+  .ht-dashboard .ht-anatomy-reading-text small {
+    font-size: 0.68rem;
+    line-height: 1.25;
+  }
+
+  .ht-dashboard .ht-anatomy-reading-text strong {
+    font-size: 0.95rem;
+    line-height: 1.1;
+  }
+
+  .ht-dashboard .ht-anatomy-reading-text em {
+    font-size: 0.64rem;
+    line-height: 1.2;
+  }
+
+  .ht-dashboard .ht-reading-options {
+    gap: 0.15rem 0.3rem;
+  }
+
+  .ht-dashboard .ht-reading-row {
+    gap: 0.25rem;
+    padding: 0.15rem 0.3rem;
+    font-size: 0.68rem;
+  }
+
+  .ht-dashboard .ht-reading-label {
+    min-width: 0;
+    overflow: hidden;
+    font-size: 0.67rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ht-dashboard .ht-reading-val {
+    flex: 0 0 auto;
+    font-size: 0.67rem;
+    white-space: nowrap;
+  }
+
+  /* Region chips duplicate the chart markers, so the compact chart relies on
+     the markers themselves and drops the chip list to save height. */
+  .ht-dashboard .ht-body-part-list {
+    display: none;
+  }
+
+  .ht-dashboard .ht-chart-record-link {
+    display: none;
+  }
+
+  /* Goals & reminders */
+  .ht-dashboard .ht-right-column {
+    gap: 0.45rem;
+  }
+
+  .ht-dashboard .ht-goal-list {
+    gap: 0.3rem;
+    padding: 0.45rem 0.7rem;
+  }
+
+  .ht-dashboard .ht-goal-list .ht-goal-row:nth-of-type(n + 3) {
+    display: none;
+  }
+
+  .ht-dashboard .ht-goal-row {
+    gap: 0.5rem;
+    padding: 0.25rem 0.4rem;
+  }
+
+  .ht-dashboard .ht-goal-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+  }
+
+  .ht-dashboard .ht-goal-copy {
+    gap: 0;
+  }
+
+  .ht-dashboard .ht-goal-copy strong {
+    font-size: 0.76rem;
+    line-height: 1.2;
+  }
+
+  .ht-dashboard .ht-goal-copy small {
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+
+  .ht-dashboard .ht-goal-track {
+    height: 3px;
+    margin-top: 1px;
+  }
+
+  .ht-dashboard .ht-goal-percent {
+    font-size: 0.7rem;
+  }
+
+  .ht-dashboard .ht-reminder-list {
+    padding: 0.25rem 0.7rem 0.45rem;
+  }
+
+  .ht-dashboard .ht-reminder-list .ht-reminder-row:nth-of-type(n + 3) {
+    display: none;
+  }
+
+  .ht-dashboard .ht-reminder-row {
+    gap: 0.5rem;
+    padding: 0.25rem 0.15rem;
+  }
+
+  .ht-dashboard .ht-reminder-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.72rem;
+  }
+
+  .ht-dashboard .ht-reminder-copy strong {
+    font-size: 0.76rem;
+    line-height: 1.25;
+  }
+
+  .ht-dashboard .ht-reminder-copy small {
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+
+  .ht-dashboard .ht-status-pill {
+    padding: 0.12rem 0.4rem;
+    font-size: 0.64rem;
+  }
+
+  .ht-dashboard .ht-panel-empty {
+    min-height: 52px;
+    padding: 0.5rem;
+    font-size: 0.74rem;
+  }
+
+  /* Recent records & shortcuts */
+  .ht-dashboard .ht-lower-grid {
+    gap: 0.45rem;
+  }
+
+  .ht-dashboard .ht-recent-table thead {
+    display: none;
+  }
+
+  .ht-dashboard .ht-recent-table tbody tr:nth-child(n + 4) {
+    display: none;
+  }
+
+  .ht-dashboard .ht-recent-table tbody td {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .ht-dashboard .ht-shortcuts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.45rem;
+    align-content: center;
+  }
+
+  .ht-dashboard .ht-shortcut-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 0;
+    padding: 0.45rem 0.55rem;
+  }
+
+  .ht-dashboard .ht-shortcut-icon {
+    width: 26px;
+    height: 26px;
+    flex: 0 0 auto;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+  }
+
+  .ht-dashboard .ht-shortcut-card strong {
+    font-size: 0.74rem;
+    white-space: normal;
+  }
+
+  .ht-dashboard .ht-shortcut-card small {
+    display: none;
+  }
+}
+
+/* Keep the two-column overview on medium desktops, like the responsive layout */
+@media (min-width: 993px) and (max-width: 1300px) {
+  .ht-dashboard .ht-overview-grid {
+    grid-template-columns: 250px minmax(0, 1fr);
+  }
+
+  .ht-dashboard .ht-right-column {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1300px) {
+  .ht-overview-grid {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+  .ht-right-column {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .ht-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ht-overview-grid {
+    grid-template-columns: 1fr;
+  }
+  .ht-right-column {
+    grid-template-columns: 1fr;
+  }
+  .ht-lower-grid {
+    grid-template-columns: 1fr;
+  }
+  .ht-quote-banner {
+    width: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .ht-topbar {
+    height: 54px;
+    padding: 0 0.85rem;
+  }
+  .ht-topbar-brand small {
+    display: none;
+  }
+  .ht-topbar-brand strong {
+    font-size: 1.05rem;
+  }
+  .ht-topbar-account > span:last-child {
+    display: none;
+  }
+  .ht-topbar-logout {
+    display: none;
+  }
+  .ht-mobile-menu {
+    display: grid;
+    place-items: center;
+    margin-left: auto;
+  }
+
+  .page {
+    flex-direction: column;
+  }
+
+  .dh-sidebar.navbar-vertical {
+    position: fixed;
+    top: 54px;
+    left: 0;
+    z-index: 1025;
+    width: 250px;
+    height: calc(100vh - 54px);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .dh-sidebar.navbar-vertical.show,
+  .dh-sidebar.navbar-vertical .navbar-collapse.show {
+    transform: translateX(0);
+  }
+
+  .ht-welcome-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ht-quote-banner {
+    width: 100%;
+  }
+  .ht-anatomy-layout {
+    grid-template-columns: 1fr;
+  }
+  .ht-shortcuts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ht-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .ht-form-field-wide {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .ht-metric-grid {
+    grid-template-columns: 1fr;
+  }
+  .ht-shortcuts {
+    grid-template-columns: 1fr;
+  }
+  .ht-welcome-copy h1 {
+    font-size: 1.2rem;
+  }
+  .ht-body-part-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ht-reading-options {
+    grid-template-columns: 1fr;
+  }
+}
