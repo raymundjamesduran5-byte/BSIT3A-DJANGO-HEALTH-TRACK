@@ -40,6 +40,12 @@
             <span class="nav-link-title">Dashboard</span>
           </a>
         </li>
+        <li class="nav-item mb-1">
+          <a class="nav-link {% if request.resolver_match.url_name == 'assistant' %}active{% endif %}" href="{% url 'assistant' %}">
+            <span class="nav-link-icon"><i class="fa-solid fa-comment-medical" aria-hidden="true"></i></span>
+            <span class="nav-link-title">AI Assistant</span>
+          </a>
+        </li>
 
         <li class="nav-item mb-1"><a class="nav-link {% if request.resolver_match.kwargs.slug == 'profile' %}active{% endif %}" href="{% url 'info:health_list' slug='profile' %}"><span class="nav-link-icon"><i class="fa-solid fa-user"></i></span><span class="nav-link-title">Health Profile</span></a></li>
         <li class="nav-item mb-1">

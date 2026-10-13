@@ -1,0 +1,70 @@
+{% extends "theme/base.html" %}
+{% load static %}
+
+{% block body_class %}ht-page-assistant{% endblock %}
+{% block extra_css %}<link href="{% static 'css/health-assistant.css' %}" rel="stylesheet">{% endblock %}
+
+{% block content %}
+<main class="ht-assistant" aria-labelledby="assistant-title">
+  <header class="ht-assistant-heading">
+    <div>
+      <p class="ht-assistant-eyebrow">Your private health records</p>
+      <h1 id="assistant-title"><i class="fa-solid fa-comment-medical" aria-hidden="true"></i> Health Assistant</h1>
+      <p class="ht-assistant-intro">A free, rule-based helper that looks up and summarizes information you have recorded in HealTrack. It does not generate medical advice or use an external AI service.</p>
+    </div>
+    <button class="ht-assistant-clear" id="clear-chat" type="button"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Clear chat</button>
+  </header>
+
+  <section class="ht-assistant-card" aria-label="Health Assistant chat">
+    <div class="ht-assistant-status">
+      <span class="ht-assistant-avatar"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
+      <div><strong>HealTrack Assistant</strong><small><span class="ht-assistant-status-dot"></span> Private · Uses your saved records</small></div>
+    </div>
+
+    <div class="ht-chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions text">
+      <article class="ht-chat-message ht-chat-assistant" data-welcome="true">
+        <span class="ht-message-avatar" aria-hidden="true"><i class="fa-solid fa-heart-pulse"></i></span>
+        <div class="ht-message-content">
+          <strong>Health Assistant</strong>
+          <p>Hello! I can look up your daily or weekly steps, water intake, sleep, exercise, meals, goals, measurements, pending reminders, and previous health reports. Ask me about one of those topics.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="ht-chat-loading" id="chat-loading" role="status" hidden>
+      <span class="ht-loading-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Checking your records…</span>
+    </div>
+    <div class="ht-chat-error" id="chat-error" role="alert" hidden></div>
+
+    <div class="ht-assistant-suggestions" aria-label="Suggested questions">
+      <span>Try asking</span>
+      <button type="button" data-question="What should I do today?">Today’s wellness plan</button>
+      <button type="button" data-question="Can you check my health progress today?">Check my progress</button>
+      <button type="button" data-question="How many steps did I record today?">Steps today</button>
+      <button type="button" data-question="How much water did I drink today?">Water today</button>
+      <button type="button" data-question="Am I drinking enough water based on my records?">Water vs my goal</button>
+      <button type="button" data-question="What was my latest sleep duration and quality?">Latest sleep</button>
+      <button type="button" data-question="How can I improve my sleep?">Sleep ideas</button>
+      <button type="button" data-question="Show my health goal progress">Goal progress</button>
+      <button type="button" data-question="What reminders are pending?">Pending reminders</button>
+      <button type="button" id="refresh-plan">Refresh today’s plan</button>
+    </div>
+
+    <form class="ht-chat-form" id="chat-form" method="post" action="{% url 'assistant_chat' %}" data-endpoint="{% url 'assistant_chat' %}">
+      {% csrf_token %}
+      <label class="visually-hidden" for="chat-input">Ask about your recorded health information</label>
+      <textarea id="chat-input" name="message" rows="1" maxlength="500" placeholder="Ask about your recorded health information…" required></textarea>
+      <button id="chat-send" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span>Send</span></button>
+      <small class="ht-chat-limit">Up to 500 characters. Your message is processed only by this HealTrack server.</small>
+    </form>
+  </section>
+
+  <aside class="ht-assistant-disclaimer">
+    <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+    <p>This assistant provides general information from your records only. It is not a substitute for a healthcare professional and cannot diagnose, prescribe, or advise treatment changes. Ask a qualified professional about medical concerns. For emergency symptoms, contact local emergency services immediately.</p>
+  </aside>
+</main>
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/health-assistant.js' %}" defer></script>{% endblock %}

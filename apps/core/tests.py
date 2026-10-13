@@ -1,3 +1,6 @@
+from datetime import datetime, timezone as datetime_timezone
+from unittest.mock import patch
+
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.test import TestCase, override_settings
@@ -18,6 +21,25 @@ class HomeViewTests(TestCase):
         response = self.client.get(reverse('dashboard'))
 
         self.assertEqual(response.status_code, 302)
+
+    @override_settings(TIME_ZONE='Asia/Manila')
+    @patch(
+        'django.utils.timezone.now',
+        return_value=datetime(2026, 10, 13, 14, 20, tzinfo=datetime_timezone.utc),
+    )
+    def test_dashboard_displays_manila_local_date_time_and_greeting(self, _mock_now):
+        user = get_user_model().objects.create_user(username='local-time-member', password='secret1234')
+        self.client.force_login(user)
+
+        response = self.client.get(reverse('dashboard'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['today'].isoformat(), '2026-10-13')
+        self.assertEqual(response.context['current_time'], '10:20 PM')
+        self.assertEqual(response.context['greeting'], 'evening')
+        self.assertContains(response, 'October 13, 2026')
+        self.assertContains(response, '10:20 PM')
+        self.assertContains(response, 'Good evening')
 
 
 class EmailLoginTests(TestCase):

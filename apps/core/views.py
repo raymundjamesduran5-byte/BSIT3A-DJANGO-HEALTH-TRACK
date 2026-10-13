@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 
 from django.contrib import messages
@@ -7,10 +8,14 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.db import DatabaseError
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_POST
 
+from apps.core.ai_assistant_service import MAX_MESSAGE_LENGTH, answer_question
 from apps.users.models import HealthTrackUser
 from apps.users.services import mirror_healthtrack_account
 
@@ -20,6 +25,7 @@ MAX_FAILED_ATTEMPTS = 5
 LOCK_DURATION = timedelta(minutes=1)
 INVALID_LOGIN_MESSAGE = 'Invalid email or password.'
 LOCKED_MESSAGE = 'Too many failed attempts. Locked for 1 minute.'
+logger = logging.getLogger(__name__)
 
 
 def _reset_lock_state(request):
@@ -182,6 +188,44 @@ def home(request):
     from apps.info.views import health_dashboard
 
     return health_dashboard(request)
+
+
+@login_required(login_url='login')
+def assistant_page(request):
+    return render(request, 'assistant/chat.html')
+
+
+@login_required(login_url='login')
+@require_POST
+def assistant_chat(request):
+    message = request.POST.get('message', '')
+    if not isinstance(message, str):
+        return JsonResponse({'error': 'Enter a question as text.'}, status=400)
+    message = message.strip()
+    if not message:
+        return JsonResponse({'error': 'Enter a question before sending.'}, status=400)
+    if len(message) > MAX_MESSAGE_LENGTH:
+        return JsonResponse(
+            {'error': f'Questions must be {MAX_MESSAGE_LENGTH} characters or fewer.'},
+            status=400,
+        )
+
+    try:
+        health_user = None
+        if request.user.email:
+            health_user = HealthTrackUser.objects.filter(email__iexact=request.user.email).first()
+        reply = answer_question(health_user, message)
+    except DatabaseError:
+        logger.exception('Health assistant could not read health records.')
+        return JsonResponse(
+            {'error': 'The assistant could not access health records right now. Please try again later.'},
+            status=503,
+        )
+    if isinstance(reply, dict):
+        if 'error' in reply:
+            return JsonResponse({'error': reply['error']}, status=400)
+        return JsonResponse(reply)
+    return JsonResponse({'reply': reply})
 
 
 @require_http_methods(['GET', 'POST'])
